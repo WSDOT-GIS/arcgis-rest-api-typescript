@@ -1,0 +1,19 @@
+{
+  "name": "arcgis-rest-api-typescript",
+  "version": "1.0.0",
+  "description": "TypeScript definitions for ArcGIS REST API",
+  "main": "arcgis-rest.d.ts",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "typings install && tsc"
+  },
+  "keywords": [
+    "arcgis",
+    "rest",
+    "typescript"
+  ],
+  "author": "WSDOT",
+  "license": "Unlicense"
+}
