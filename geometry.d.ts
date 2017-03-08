@@ -1,11 +1,11 @@
 export type Position2D = [number, number];
 export type Position = Position2D | [number, number, number] | [number, number, number, number];
 
-export interface CircularArc {
+export interface ICircularArc {
     "c": [Position, Position2D];
 }
 
-export interface Arc {
+export interface IArc {
     "a": [
         Position, // End point: x, y, <z>, <m>
         Position2D, // Center point: center_x, center_y
@@ -17,9 +17,9 @@ export interface Arc {
     ];
 }
 
-export type ElipticArc = Arc;
+export type ElipticArc = IArc;
 
-export interface OldCircularArc {
+export interface IOldCircularArc {
     "a": [
         Position, // End point: x, y, <z>, <m>
         Position2D, // Center point: center_x, center_y
@@ -28,7 +28,7 @@ export interface OldCircularArc {
     ];
 }
 
-export interface BezierCurve {
+export interface IBezierCurve {
     "b": [
         Position,
         Position2D,
@@ -36,60 +36,60 @@ export interface BezierCurve {
     ];
 }
 
-export type JsonCurve = CircularArc | Arc | OldCircularArc | BezierCurve;
+export type JsonCurve = ICircularArc | IArc | IOldCircularArc | IBezierCurve;
 
-export interface SpatialReference {
+export interface ISpatialReference {
 }
 
-export interface SpatialReferenceWkid extends SpatialReference {
+export interface ISpatialReferenceWkid extends ISpatialReference {
     wkid?: number;
     latestWkid?: number;
     vcsWkid?: number;
     latestVcsWkid?: number;
 }
 
-export interface SpatialReferenceWkt extends SpatialReference {
+export interface ISpatialReferenceWkt extends ISpatialReference {
     wkt?: string;
     latestWkt?: string;
 }
 
-export interface Geometry {
-    spatialReference?: SpatialReference;
+export interface IGeometry {
+    spatialReference?: ISpatialReference;
 }
 
-export interface HasZM {
+export interface IHasZM {
     hasZ?: boolean;
     hasM?: boolean;
 }
 
-export interface Point extends Geometry {
+export interface IPoint extends IGeometry {
     x: number;
     y: number;
     z?: number;
     m?: number;
 }
 
-export interface Polyline extends HasZM, Geometry {
+export interface IPolyline extends IHasZM, IGeometry {
     paths: Position[][];
 }
 
-export interface PolylineWithCurves extends HasZM, Geometry {
+export interface IPolylineWithCurves extends IHasZM, IGeometry {
     curvePaths: Array<Array<Position | JsonCurve>>;
 }
 
-export interface Polygon extends HasZM, Geometry {
+export interface IPolygon extends IHasZM, IGeometry {
     rings: Position[][];
 }
 
-export interface PolygonWithCurves extends HasZM, Geometry {
+export interface IPolygonWithCurves extends IHasZM, IGeometry {
     curveRings: Array<Array<Position | JsonCurve>>;
 }
 
-export interface Multipoint extends HasZM, Geometry {
+export interface IMultipoint extends IHasZM, IGeometry {
     points: Position[];
 }
 
-export interface Envelope extends Geometry {
+export interface IEnvelope extends IGeometry {
     xmin: number;
     xmax: number;
     ymin: number;
@@ -102,4 +102,5 @@ export interface Envelope extends Geometry {
     mmax?: number;
 }
 
-export type esriGeometryType = "esriGeometryPoint" | "esriGeometryMultipoint" | "esriGeometryPolyline" | "esriGeometryPolygon" | "esriGeometryEnvelope";
+export type esriGeometryType = "esriGeometryPoint" | "esriGeometryMultipoint" | "esriGeometryPolyline" |
+                               "esriGeometryPolygon" | "esriGeometryEnvelope";

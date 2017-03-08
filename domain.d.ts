@@ -1,14 +1,14 @@
-export interface Domain {
+export interface IDomain {
     "type": "coded" | "inherited" | "range";
 }
 
-export interface RangeDomain extends Domain {
+export interface IRangeDomain extends IDomain {
     "type": "range";
     "name": string;
     "range": [number, number];
 }
 
-export interface CodedValueDomain {
+export interface ICodedValueDomain {
     "type": "codedValue";
     "name": string;
     "codedValues": Array<{
@@ -17,6 +17,6 @@ export interface CodedValueDomain {
     }>;
 }
 
-export interface InheritedDomain {
+export interface IInheritedDomain {
     type: "inherited";
 }

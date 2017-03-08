@@ -1,8 +1,15 @@
 {
   "name": "arcgis-rest-api-typescript",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TypeScript definitions for ArcGIS REST API",
   "main": "arcgis-rest.d.ts",
+  "files": [
+    "domain.d.ts",
+    "geometry.d.ts",
+    "layer.d.ts",
+    "renderer.d.ts",
+    "symbol.d.ts"
+  ],
   "dependencies": {},
   "devDependencies": {
     "tslint": "^4.5.1",
@@ -17,5 +24,13 @@
     "typescript"
   ],
   "author": "WSDOT",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/arcgis-rest-api-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/arcgis-rest-api-typescript/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-rest-api-typescript#readme"
 }

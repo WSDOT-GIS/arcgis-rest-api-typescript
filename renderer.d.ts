@@ -1,57 +1,56 @@
-import { SimpleFillSymbol, Symbol } from "./arcgis-rest-symbol";
+import { ISimpleFillSymbol, ISymbol } from "./symbol";
 
 export type RotationType = "arithmetic" | "geographic";
 
-export interface Renderer {
+export interface IRenderer {
     type: "simple" | "uniqueValue" | "classBreaks";
     rotationType: RotationType;
     rotationExpression: string;
 }
 
-export interface SimpleRenderer extends Renderer {
+export interface ISimpleRenderer extends IRenderer {
     type: "simple";
-    symbol: Symbol;
+    symbol: ISymbol;
     label: string;
     description: string;
 }
 
-export interface UniqueValueRenderer extends Renderer {
+export interface IUniqueValueRenderer extends IRenderer {
     type: "uniqueValue";
     field1: string;
     field2: string;
     field3: string;
     fieldDelimiter: string;
-    defaultSymbol: Symbol;
+    defaultSymbol: ISymbol;
     defaultLabel: string;
     uniqueValueInfos: [
         {
             value: string,
             label: string,
             description: string,
-            symbol: Symbol,
+            symbol: ISymbol,
         },
     ];
 }
 
-export interface ClassBreaksRenderer extends Renderer {
+export interface IClassBreaksRenderer extends IRenderer {
     type: "classBreaks";
     field: string;
     classificationMethod: string;
     normalizationType: "esriNormalizeByField" | "esriNormalizeByLog" | "esriNormalizeByPercentOfTotal";
-    normalizationField: string; //when normalizationType is esriNormalizeByField
-    normalizationTotal: number; //when normalizationType is esriNormalizeByPercentOfTotal
-    defaultSymbol: Symbol;
+    normalizationField: string; // when normalizationType is esriNormalizeByField
+    normalizationTotal: number; // when normalizationType is esriNormalizeByPercentOfTotal
+    defaultSymbol: ISymbol;
     defaultLabel: string;
-    backgroundFillSymbol: SimpleFillSymbol; //supported only for polygon features
+    backgroundFillSymbol: ISimpleFillSymbol; // supported only for polygon features
     minValue: number;
     classBreakInfos: [
         {
-            classMinValue?: number, //optional
+            classMinValue?: number, // optional
             classMaxValue: number,
             label: string,
             description: string,
-            symbol: Symbol,
+            symbol: ISymbol,
         },
-
     ];
 }

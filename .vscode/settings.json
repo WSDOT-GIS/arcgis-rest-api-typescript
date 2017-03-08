@@ -3,5 +3,6 @@
     "tslint.enable": true,
     "tslint.ignoreDefinitionFiles": false,
     "tslint.autoFixOnSave": true,
-    "tslint.configFile": "tsconfig.json"
+    "tslint.configFile": "tsconfig.json",
+    "tslint.validateWithDefaultConfig": true
 }
