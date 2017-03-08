@@ -1,23 +1,27 @@
-declare namespace ArcGis.Rest {
-    interface Feature {
-        geometry: Geometry;
-        attributes: any;
-    }
+import { esriGeometryType, Geometry, HasZM, SpatialReference } from "./arcgis-rest-geometry";
+import { Domain } from "./domain";
 
-    interface Field {
-        name: string;
-        type: string;
-        alias?: string;
-        length?: number;
-    }
+export type HtmlPopupType = "esriServerHTMLPopupTypeNone" | "esriServerHTMLPopupTypeAsURL" | "esriServerHTMLPopupTypeAsHTMLText";
 
-    interface FeatureSet extends HasZM {
-        objectIdFieldName?: string; // optional
-        globalIdFieldName?: string; // optional
-        displayFieldName?: string; // optional
-        geometryType?: esriGeometryType; // for feature layers only
-        spatialReference?: SpatialReference; // for feature layers only.
-        fields?: Field[];
-        features: Feature[];
-    }
+export interface Feature {
+    geometry: Geometry;
+    attributes: any;
+}
+
+export interface Field {
+    name: string;
+    type: string;
+    alias?: string;
+    length?: number;
+    domain?: Domain;
+}
+
+export interface FeatureSet extends HasZM {
+    objectIdFieldName?: string; // optional
+    globalIdFieldName?: string; // optional
+    displayFieldName?: string; // optional
+    geometryType?: esriGeometryType; // for feature layers only
+    spatialReference?: SpatialReference; // for feature layers only.
+    fields?: Field[];
+    features: Feature[];
 }
