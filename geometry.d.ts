@@ -13,7 +13,7 @@ export interface IArc {
         number, // clockwise
         number, // rotation
         number, // axis
-        number, // ratio
+        number // ratio
     ];
 }
 
@@ -24,7 +24,7 @@ export interface IOldCircularArc {
         Position, // End point: x, y, <z>, <m>
         Position2D, // Center point: center_x, center_y
         number, // minor
-        number, // clockwise
+        number // clockwise
     ];
 }
 
@@ -32,7 +32,7 @@ export interface IBezierCurve {
     "b": [
         Position,
         Position2D,
-        Position2D,
+        Position2D
     ];
 }
 

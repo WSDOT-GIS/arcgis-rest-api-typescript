@@ -4,6 +4,12 @@ import { esriGeometryType, IGeometry, IHasZM, ISpatialReference } from "./geomet
 export type HtmlPopupType = "esriServerHTMLPopupTypeNone" |
     "esriServerHTMLPopupTypeAsURL" | "esriServerHTMLPopupTypeAsHTMLText";
 
+export type esriFieldType =
+    "esriFieldTypeBlob" | "esriFieldTypeDate" | "esriFieldTypeDouble" | "esriFieldTypeGeometry" |
+    "esriFieldTypeGlobalID" | "esriFieldTypeGUID" | "esriFieldTypeInteger" | "esriFieldTypeOID" |
+    "esriFieldTypeRaster" | "esriFieldTypeSingle" | "esriFieldTypeSmallInteger" |
+    "esriFieldTypeString" | "esriFieldTypeXML";
+
 export interface IFeature {
     geometry: IGeometry;
     attributes: any;
@@ -11,7 +17,7 @@ export interface IFeature {
 
 export interface IField {
     name: string;
-    type: string;
+    type: esriFieldType;
     alias?: string;
     length?: number;
     domain?: IDomain;

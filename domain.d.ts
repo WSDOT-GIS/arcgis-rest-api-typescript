@@ -13,7 +13,7 @@ export interface ICodedValueDomain {
     "name": string;
     "codedValues": Array<{
         name: string,
-        code: number | string,
+        code: number | string
     }>;
 }
 

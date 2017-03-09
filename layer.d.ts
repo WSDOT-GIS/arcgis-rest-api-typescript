@@ -20,7 +20,7 @@ export interface ITimeInfo {
     timeExtent: [number, number];
     timeReference: {
         timeZone: string,
-        respectsDaylightSaving: boolean,
+        respectsDaylightSaving: boolean
     };
     timeInterval: number;
     timeIntervalUnits: string;
@@ -32,7 +32,7 @@ export interface ITimeInfo {
         timeDataCumulative: boolean,
         // Time offset for this layer so that it can be overlaid on the top of a previous or future time period
         timeOffset: number,
-        timeOffsetUnits: TimeOffsetUnits,
+        timeOffsetUnits: TimeOffsetUnits
     };
     hasLiveData: boolean;
 }
@@ -66,7 +66,7 @@ export interface ILayer {
     drawingInfo: {
         renderer: IRenderer,
         transparency: number,
-        labelingInfo: any | null, // <labelingInfo> // TODO: figure out info for this type.
+        labelingInfo: any | null // <labelingInfo> // TODO: figure out info for this type.
     };
 
     // from 10 onward - indicates whether the layer / table has attachments or not
@@ -88,8 +88,8 @@ export interface ILayer {
         id: number,
         name: number,
         domains: {
-            [domainField: string]: IDomain,
-        },
+            [domainField: string]: IDomain
+        }
     }
     >;
 
@@ -106,7 +106,7 @@ export interface ILayer {
         // Added in 10.1. Returned only for attributed relationships
         relationshipTableId: number, // <attributedRelationshipClassTableId>,
         // Added in 10.1. Returned only for attributed relationships
-        keyFieldInRelationshipTable: string, // "<key field in AttributedRelationshipClass table that matches keyField>"
+        keyFieldInRelationshipTable: string // "<key field in AttributedRelationshipClass table that matches keyField>"
 
     }>;
     // Added at 10.1
@@ -144,6 +144,6 @@ export interface ILayer {
         // Added at 10.3.
         supportsPagination: false,
         // Added at 10.3.
-        supportsTrueCurve: true,
+        supportsTrueCurve: true
     };
 }

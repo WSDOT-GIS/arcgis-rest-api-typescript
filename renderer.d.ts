@@ -28,8 +28,8 @@ export interface IUniqueValueRenderer extends IRenderer {
             value: string,
             label: string,
             description: string,
-            symbol: ISymbol,
-        },
+            symbol: ISymbol
+        }
     ];
 }
 
@@ -50,7 +50,7 @@ export interface IClassBreaksRenderer extends IRenderer {
             classMaxValue: number,
             label: string,
             description: string,
-            symbol: ISymbol,
-        },
+            symbol: ISymbol
+        }
     ];
 }
