@@ -2,33 +2,35 @@ import { esriGeometryType, SpatialReference } from "./geometry";
 
 export interface IDataSource {
     type: string;
-    workspaceId: string; // "<registered workspace id>",
 
 }
 
-export interface ITableDataSource extends IDataSource {
-    type: "table";
+export interface IDataSourceWithWorkspaceID extends IDataSource {
     workspaceId: string; // "<registered workspace id>",
+}
+
+export interface IDataSourceWithDataSourceName extends IDataSource {
     dataSourceName: string; // "<table name>",
+}
+
+export interface ITableDataSource extends IDataSourceWithWorkspaceID, IDataSourceWithDataSourceName {
+    type: "table";
     gdbVersion: string; // "<version name>"
 }
 
-export interface IQueryTableDataSource extends IDataSource {
+export interface IQueryTableDataSource extends IDataSourceWithWorkspaceID {
     type: "queryTable";
-    workspaceId: string; // "<registered workspace id>",
     query: string; // "<SQL query>",
     oidFields: string; // "<field1>,<field2>,<field3>",
     geometryType: esriGeometryType;
     spatialReference: SpatialReference;
 }
 
-export interface IRasterDataSource extends IDataSource {
+export interface IRasterDataSource extends IDataSourceWithWorkspaceID , IDataSourceWithDataSourceName {
     type: "raster";
-    workspaceId: string; // "<registered workspace id>",
-    dataSourceName: string; // "<raster name>"
 }
 
-export interface IJoinTableDataSource {
+export interface IJoinTableDataSource extends IDataSource {
     type: "joinTable";
     leftTableSource: IDataSource;
     rightTableSource: IDataSource;

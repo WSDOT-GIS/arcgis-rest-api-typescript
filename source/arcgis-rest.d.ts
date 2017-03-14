@@ -1,3 +1,8 @@
+// Type definitions for arcgis-to-geojson-utils 10.5
+// Project: http://resources.arcgis.com/en/help/arcgis-rest-api/
+// Definitions by: Jeff Jacobson <https://github.com/JeffJacobson>
+// Definitions: https://github.com/WSDOT-GIS/arcgis-rest-api-typescript
+
 import { IDomain } from "./domain";
 import { esriGeometryType, IGeometry, IHasZM, SpatialReference } from "./geometry";
 

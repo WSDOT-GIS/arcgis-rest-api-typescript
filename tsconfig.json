@@ -1,14 +1,16 @@
 {
-    "include": [
-        "*.d.ts"
-    ],
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "rootDir": "./source",
         "noImplicitAny": true,
-        "rootDir": "source",
+        "noImplicitThis": true,
         "strictNullChecks": true,
-        "sourceMap": false,
-        "noEmit": true
-    }
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true,
+        "listFiles": true
+    },
+    "include": [
+        "./*.d.ts",
+        "./source/*.d.ts"
+    ]
 }
