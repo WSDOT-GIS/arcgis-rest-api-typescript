@@ -10,7 +10,9 @@ export type esriFieldType =
 
 export interface IFeature {
     geometry: IGeometry;
-    attributes: any;
+    attributes: {
+        [key: string]: string | number | boolean | null
+    };
 }
 
 export interface IField {
@@ -26,24 +28,103 @@ export interface IFeatureSet extends IHasZM {
     globalIdFieldName?: string; // optional
     displayFieldName?: string; // optional
     geometryType?: esriGeometryType; // for feature layers only
-    spatialReference?: ISpatialReference; // for feature layers only.
+    spatialReference?: SpatialReference; // for feature layers only.
     fields?: IField[];
     features: IFeature[];
 }
+
+export interface IClassBreaks {
+    type: "classBreaksDef";
+    classificationField: string; // "<field name>",
+    classificationMethod: "esriClassifyNaturalBreaks" | "esriClassifyEqualInterval" | "esriClassifyQuantile" |
+                          "esriClassifyStandardDeviation" | "esriClassifyGeometricalInterval";
+    breakCount: number;
+    standardDeviationInterval: 1 | 0.5 | 0.33 | 0.25; // use when classificationMethod is esriClassifyStandardDeviation.
+
+    // optional. use to normalize class breaks
+    normalizationType: "<esriNormalizeByField | esriNormalizeByLog | esriNormalizeByPercentOfTotal>";
+    normalizationField: "<field name>"; // use when normalizationType is esriNormalizeByField
+
+    // optional. use to define symbol for classes
+    baseSymbol: ISymbol;
+    colorRamp: ColorRamp;
+}
+
+export interface IUniqueValue {
+    type: "uniqueValueDef";
+    uniqueValueFields: [string, string, string] | [string, string] | [string];
+    fieldDelimiter: "field_delimiter_character";
+
+    // optional. use to define symbol for unique values
+    baseSymbol?: ISymbol;
+    colorRamp?: ColorRamp;
+}
+export type Color = [number, number, number, number];
+
+export type ColorRamp = IAlgorithmicColorRamp | IMultipartColorRamp;
+
+export interface IAlgorithmicColorRamp {
+  "type": "algorithmic";
+  "fromColor": Color;
+  "toColor": Color;
+  "algorithm": "esriHSVAlgorithm" | "esriCIELabAlgorithm" | "esriLabLChAlgorithm";
+}
+
+export interface IMultipartColorRamp {
+  "type": "multipart";
+  "colorRamps": IAlgorithmicColorRamp[];
+}
+
+export interface IDataSource {
+    type: string;
+    workspaceId: string; // "<registered workspace id>",
+
+}
+
+export interface ITableDataSource extends IDataSource {
+    type: "table";
+    workspaceId: string; // "<registered workspace id>",
+    dataSourceName: string; // "<table name>",
+    gdbVersion: string; // "<version name>"
+}
+
+export interface IQueryTableDataSource extends IDataSource {
+    type: "queryTable";
+    workspaceId: string; // "<registered workspace id>",
+    query: string; // "<SQL query>",
+    oidFields: string; // "<field1>,<field2>,<field3>",
+    geometryType: esriGeometryType;
+    spatialReference: SpatialReference;
+}
+
+export interface IRasterDataSource extends IDataSource {
+    type: "raster";
+    workspaceId: string; // "<registered workspace id>",
+    dataSourceName: string; // "<raster name>"
+}
+
+export interface IJoinTableDataSource {
+    type: "joinTable";
+    leftTableSource: IDataSource;
+    rightTableSource: IDataSource;
+    leftTableKey: string; // "<field name from left table>",
+    rightTableKey: string; // "<field name from right table>",
+    joinType: "esriLeftOuterJoin" | "esriLeftInnerJoin";
+}
 export interface IDomain {
-    "type": "coded" | "inherited" | "range";
+    type: "codedValue" | "inherited" | "range";
 }
 
 export interface IRangeDomain extends IDomain {
-    "type": "range";
-    "name": string;
-    "range": [number, number];
+    type: "range";
+    name: string;
+    range: [number, number];
 }
 
-export interface ICodedValueDomain {
-    "type": "codedValue";
-    "name": string;
-    "codedValues": Array<{
+export interface ICodedValueDomain extends IDomain {
+    type: "codedValue";
+    name: string;
+    codedValues: Array<{
         name: string,
         code: number | string
     }>;
@@ -51,6 +132,51 @@ export interface ICodedValueDomain {
 
 export interface IInheritedDomain {
     type: "inherited";
+}
+
+export interface IGeodataTransformation {
+    geodataTransform: "Polynomial" | "Projective" | "Identity";
+    geodataTransformArguments: ITransformationArguments | {
+        spatialReference: SpatialReference
+    };
+}
+
+export interface ITransformPoint {
+    x: number;
+    y: number;
+}
+
+export interface ITransformationArguments {
+    sourcePoints: ITransformPoint[];
+    targetPoints: ITransformPoint[];
+    coeffx: number[]; // array of doubles
+    coeffy: number[]; // array of doubles
+    inverseCoeffx: number[]; // array of doubles
+    inverseCoeffy: number[]; // array of doubles
+    spatialReference: SpatialReference;
+    /**
+     * integer: 1, 2, or 3. First order requires at least 3 pairs of control points; second order requires at
+     * least 6 pairs of control points; third order requires at least 10 pairs of control points;
+     * use more control points to get better fit (smaller RMS)
+     */
+    polynomialOrder: 1 | 2 | 3;
+}
+
+export interface IPolynomialTransformation extends IGeodataTransformation {
+    geodataTransform: "Polynomial";
+    geodataTransformArguments: ITransformationArguments;
+}
+
+export interface IProjectiveTransformation extends IGeodataTransformation {
+    geodataTransform: "Projective";
+    geodataTransformArguments: ITransformationArguments;
+}
+
+export interface IIdentityTransformation extends IGeodataTransformation {
+    geodataTransform: "Identity";
+    geodataTransformArguments: {
+        spatialReference: SpatialReference
+    };
 }
 export type Position2D = [number, number];
 export type Position = Position2D | [number, number, number] | [number, number, number, number];
@@ -61,13 +187,20 @@ export interface ICircularArc {
 
 export interface IArc {
     "a": [
-        Position, // End point: x, y, <z>, <m>
-        Position2D, // Center point: center_x, center_y
-        number, // minor
+        /** End point: x, y, <z>, <m> */
+        Position,
+        /** Center point: center_x, center_y */
+        Position2D,
+        /** minor */
+        number,
+        /** clockwise */
         number, // clockwise
-        number, // rotation
-        number, // axis
-        number // ratio
+        /** rotation */
+        number,
+        /** axis */
+        number,
+        /** ratio */
+        number
     ];
 }
 
@@ -92,23 +225,22 @@ export interface IBezierCurve {
 
 export type JsonCurve = ICircularArc | IArc | IOldCircularArc | IBezierCurve;
 
-export interface ISpatialReference {
-}
+export type SpatialReference = ISpatialReferenceWkid | ISpatialReferenceWkt;
 
-export interface ISpatialReferenceWkid extends ISpatialReference {
+export interface ISpatialReferenceWkid {
     wkid?: number;
     latestWkid?: number;
     vcsWkid?: number;
     latestVcsWkid?: number;
 }
 
-export interface ISpatialReferenceWkt extends ISpatialReference {
+export interface ISpatialReferenceWkt {
     wkt?: string;
     latestWkt?: string;
 }
 
 export interface IGeometry {
-    spatialReference?: ISpatialReference;
+    spatialReference?: SpatialReference;
 }
 
 export interface IHasZM {
@@ -158,6 +290,34 @@ export interface IEnvelope extends IGeometry {
 
 export type esriGeometryType = "esriGeometryPoint" | "esriGeometryMultipoint" | "esriGeometryPolyline" |
                                "esriGeometryPolygon" | "esriGeometryEnvelope";
+export interface IHistogram {
+    /**
+     * int, number of bins
+     */
+    "size": number;
+    /** minimum value */
+    "min": number;
+    /** maximum value */
+    "max": number;
+    /**
+     * integer(64bit), counts of pixels in each bin. The width of each bin is (max-min)/size.
+     */
+    "counts": number[];
+}
+export type ImageCoordinateSystem = IIcsBasedImageCoordinateSystem | IIcsBasedImageCoordinateSystem;
+
+export interface IIcsImageCoordinateSystem {
+    icsid: number;
+}
+
+export interface IIcsBasedImageCoordinateSystem {
+    /**
+     * the full ics json, which include transformations and map spatial reference information and specific to each
+     * image.
+     * @see http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Image_coordinate_systems/02r30000029w000000/
+     */
+    ics: object;
+}
 
 export interface ILayerReference {
     id: number;
@@ -358,7 +518,6 @@ export interface IClassBreaksRenderer extends IRenderer {
         }
     ];
 }
-export type Color = [number, number, number, number];
 export type SimpleMarkerSymbolStyle = "esriSMSCircle" | "esriSMSCross" | "esriSMSDiamond" | "esriSMSSquare" |
                                       "esriSMSX" | "esriSMSTriangle";
 export type SimpleLineSymbolStyle = "esriSLSDash" | "esriSLSDashDot" | "esriSLSDashDotDot" | "esriSLSDot" |

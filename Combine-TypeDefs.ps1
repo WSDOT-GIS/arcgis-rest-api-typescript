@@ -5,11 +5,13 @@
     Combines typescript definition files into a single file.
 #>
 
-# Remove pre-existing index.d.ts. Supress error if file doesn't exist.
-Remove-Item "index.d.ts" -ErrorAction Ignore
+# Remove pre-existing index.d.ts if it exists
+if (Test-Path "index.d.ts") {
+    Remove-Item "index.d.ts"
+}
 
 # Get the d.ts files.
-$files = Get-ChildItem "*.d.ts"
+$files = Get-ChildItem ".\source\*.d.ts"
 
 # Concat the files into index.d.ts
 Get-Content $files | Select-String "^import" -NotMatch | Set-Content "index.d.ts"

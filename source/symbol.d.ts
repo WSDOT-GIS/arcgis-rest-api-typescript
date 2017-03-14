@@ -1,4 +1,4 @@
-export type Color = [number, number, number, number];
+import { Color } from "./color-ramp";
 export type SimpleMarkerSymbolStyle = "esriSMSCircle" | "esriSMSCross" | "esriSMSDiamond" | "esriSMSSquare" |
                                       "esriSMSX" | "esriSMSTriangle";
 export type SimpleLineSymbolStyle = "esriSLSDash" | "esriSLSDashDot" | "esriSLSDashDotDot" | "esriSLSDot" |

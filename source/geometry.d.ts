@@ -7,13 +7,20 @@ export interface ICircularArc {
 
 export interface IArc {
     "a": [
-        Position, // End point: x, y, <z>, <m>
-        Position2D, // Center point: center_x, center_y
-        number, // minor
+        /** End point: x, y, <z>, <m> */
+        Position,
+        /** Center point: center_x, center_y */
+        Position2D,
+        /** minor */
+        number,
+        /** clockwise */
         number, // clockwise
-        number, // rotation
-        number, // axis
-        number // ratio
+        /** rotation */
+        number,
+        /** axis */
+        number,
+        /** ratio */
+        number
     ];
 }
 
@@ -38,23 +45,22 @@ export interface IBezierCurve {
 
 export type JsonCurve = ICircularArc | IArc | IOldCircularArc | IBezierCurve;
 
-export interface ISpatialReference {
-}
+export type SpatialReference = ISpatialReferenceWkid | ISpatialReferenceWkt;
 
-export interface ISpatialReferenceWkid extends ISpatialReference {
+export interface ISpatialReferenceWkid {
     wkid?: number;
     latestWkid?: number;
     vcsWkid?: number;
     latestVcsWkid?: number;
 }
 
-export interface ISpatialReferenceWkt extends ISpatialReference {
+export interface ISpatialReferenceWkt {
     wkt?: string;
     latestWkt?: string;
 }
 
 export interface IGeometry {
-    spatialReference?: ISpatialReference;
+    spatialReference?: SpatialReference;
 }
 
 export interface IHasZM {

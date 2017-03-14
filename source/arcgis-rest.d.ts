@@ -1,5 +1,5 @@
 import { IDomain } from "./domain";
-import { esriGeometryType, IGeometry, IHasZM, ISpatialReference } from "./geometry";
+import { esriGeometryType, IGeometry, IHasZM, SpatialReference } from "./geometry";
 
 export type HtmlPopupType = "esriServerHTMLPopupTypeNone" |
     "esriServerHTMLPopupTypeAsURL" | "esriServerHTMLPopupTypeAsHTMLText";
@@ -12,7 +12,9 @@ export type esriFieldType =
 
 export interface IFeature {
     geometry: IGeometry;
-    attributes: any;
+    attributes: {
+        [key: string]: string | number | boolean | null
+    };
 }
 
 export interface IField {
@@ -28,7 +30,7 @@ export interface IFeatureSet extends IHasZM {
     globalIdFieldName?: string; // optional
     displayFieldName?: string; // optional
     geometryType?: esriGeometryType; // for feature layers only
-    spatialReference?: ISpatialReference; // for feature layers only.
+    spatialReference?: SpatialReference; // for feature layers only.
     fields?: IField[];
     features: IFeature[];
 }

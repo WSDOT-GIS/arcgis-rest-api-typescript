@@ -9,7 +9,8 @@
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "test": "tsc && tslint"
+    "prepublish": "powershell .\\Combine-TypeDefs.ps1",
+    "test": "tsc && tslint --project tslint.json"
   },
   "keywords": [
     "arcgis",
