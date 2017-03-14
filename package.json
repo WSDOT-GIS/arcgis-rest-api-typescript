@@ -1,5 +1,5 @@
 {
-  "name": "arcgis-rest-api-typescript",
+  "name": "arcgis-rest-api-ts-d",
   "version": "3.0.0",
   "description": "TypeScript definitions for ArcGIS REST API",
   "main": "index.d.ts",
@@ -18,6 +18,12 @@
     "typescript"
   ],
   "author": "WSDOT",
+  "contributors": [
+    {
+      "name": "Jeff Jacobson",
+      "url": "https://github.com/JeffJacobson"
+    }
+  ],
   "license": "Unlicense",
   "repository": {
     "type": "git",
