@@ -1,8 +1,11 @@
 {
   "name": "arcgis-rest-api-ts-d",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "TypeScript definitions for ArcGIS REST API",
   "main": "index.d.ts",
+  "files": [
+
+  ],
   "dependencies": {},
   "devDependencies": {
     "tslint": "^4.5.1",
