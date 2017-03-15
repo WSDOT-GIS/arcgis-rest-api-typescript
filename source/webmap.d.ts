@@ -257,7 +257,7 @@ export interface IMediaInfo {
     type: "image" | "barchart" | "columnchart" | "linechart" | "piechart";
 
     /** A value object containing information about how the image should be retrieved or how the chart should be constructed. */
-    value: IValue;
+    value: WebMapValue;
 
 }
 
